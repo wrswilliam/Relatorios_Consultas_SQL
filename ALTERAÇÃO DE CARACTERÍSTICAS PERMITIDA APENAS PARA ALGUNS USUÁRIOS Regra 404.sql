@@ -23,6 +23,6 @@
 				SET @error = 404;
 				SET @error_message = 'Esse usuário não tem permissão para alterar as Características do PN, favor solicitar para os usuários responsáveis.'
 			END 
-END
+END 
 
 
