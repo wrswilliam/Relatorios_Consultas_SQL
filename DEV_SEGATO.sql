@@ -62,3 +62,6 @@ SELECT
 	    
 FROM W_DEV T0
 INNER JOIN W_DEVA T1 ON T1.[CODIGO ITEM] = T0.[CODIGO ITEM]
+
+
+/* apenas testes*/
