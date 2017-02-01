@@ -1,4 +1,4 @@
-/* Rodar apenas uma vez a criação da tabela
+/* Rodar apenas uma vez a criação da tabela criado por William. Silva
 
 CREATE TABLE RELATORIO_AMANDA (
 		NUMBER INT,
