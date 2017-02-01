@@ -1,3 +1,5 @@
+/* Rodar apenas uma vez a criação da tabela
+
 CREATE TABLE RELATORIO_AMANDA (
 		NUMBER INT,
 		BaseRef INT,
@@ -11,7 +13,7 @@ CREATE TABLE RELATORIO_AMANDA (
 		OcrCode NVARCHAR(55),
 		Dscription NVARCHAR(500), 
 		Price  DECIMAL(10,2)
-	)
+	) */
 	
 DECLARE 
 		--VARIAVEIS PARA CONTROLE
