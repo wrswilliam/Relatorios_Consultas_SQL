@@ -11,7 +11,8 @@ GO
 ALTER VIEW [dbo].[LG_CotacaoVendas_vw]
 AS
 
-SELECT	'NroCotacao'	= T0.DocNum, 
+SELECT	Distinct --add william, pois estava trazendo itens duplicatos 02/02/17 09:47
+		'NroCotacao'	= T0.DocNum, 
 		'NomeEmpresa'	= isnull(T13.BPLName,t2.CompnyName),
 		'Utilizacao'	= T12.Usage,  
 		'Emissao'		= T0.DocDate, 
@@ -53,7 +54,7 @@ SELECT	'NroCotacao'	= T0.DocNum,
 		'EndEntrega'	= T0.Address2, 
 		'Transp'		= T11.CardName,
 		'Obs'			= T0.Comments,
-		'Rodape'		= T0.Footer,
+		--'Rodape'		= T0.Footer, --removido por william, pois não estava sendo utilizado e não deixava utilizad a função Distinct 02/02/17 09:47
 		'Imposto'		= T0.VatSumSy,
 		'DocTotal'		= T0.DocTotal,
 		'DocEntry'      = T0.DocEntry      
