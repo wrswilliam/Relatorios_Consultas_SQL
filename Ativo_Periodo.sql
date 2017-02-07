@@ -1,0 +1,11 @@
+SELECT T0.CardCode
+      ,T0.CardName
+	  ,T0.DocEntry AS N_PRIMARIO
+      ,T0.SERIAL AS NOTA
+	  ,T1.ItemCode
+FROM OPCH T0
+INNER JOIN PCH1 T1 ON T1.DOCENTRY = T0.DocEntry
+WHERE T1.ItemCode LIKE 'AT%'
+AND T0.CANCELED = 'N'
+AND T0.DocDate >=[%0]
+AND T0.DocDate <=[%1]
