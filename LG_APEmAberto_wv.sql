@@ -111,6 +111,10 @@ SELECT 'TipoDoc'    = 'Duplicata',
        'PayRef'     = T0.PaymentRef,   
 
        'Total'      = T1.InsTotal,  
+	   
+	   'ContaContabil'= t2.AcctCode,
+
+	   'Regra Distr' = T2.OcrCode,
 
        'Pago'       = T1.PaidToDate,  
 
@@ -135,6 +139,7 @@ SELECT 'TipoDoc'    = 'Duplicata',
   FROM  OPCH T0    
 
    JOIN PCH6 T1 ON T1.DocEntry = T0.DocEntry     
+   JOIN PCH1 T2 ON T2.DOCENTRY = T1.DOCENTRY	
 
 WHERE T0.CardCode like '%'  
 
@@ -188,6 +193,10 @@ SELECT 'TipoDoc'    = 'Adiantamento',
 
        'Total'      = T1.InsTotal,  
 
+	   'ContaContabil'= t2.AcctCode,
+
+	   'Regra Distr' = T2.OcrCode,
+
        'Pago'       = T1.PaidToDate,  
 
        'Posted'     = T0.Posted,  
@@ -211,6 +220,7 @@ SELECT 'TipoDoc'    = 'Adiantamento',
  FROM ODPO T0    
 
       JOIN DPO6 T1  ON  T1.DocEntry = T0.DocEntry    
+	  JOIN DPO1 T2  ON  T2.DOCENTRY = T1.DOCENTRY
 
 WHERE T0.CardCode like '%' 
 
@@ -219,7 +229,6 @@ WHERE T0.CardCode like '%'
   AND T1.Status = 'O'     
 
   
-
     
 
 UNION  
@@ -264,6 +273,11 @@ SELECT 'TipoDoc'    = 'Devolucao',
 
        'Total'      = T1.InsTotal,  
 
+	   'ContaContabil'= t2.AcctCode,
+
+	   'Regra Distr' = T2.OcrCode,
+
+
        'Pago'       = T1.PaidToDate,  
 
        'Posted'     = T0.Posted,  
@@ -287,6 +301,7 @@ SELECT 'TipoDoc'    = 'Devolucao',
  FROM ORPC T0    
 
  JOIN RPC6 T1 ON T1.DocEntry = T0.DocEntry     
+ JOIN RPC1 T2 ON T2.DocEntry = T1.DocEntry
 
 WHERE T0.CardCode like '%'  
 
@@ -346,6 +361,10 @@ SELECT 'TipoDoc'		= 'LCM',
 
        'Total'			= (T0.Credit-T0.Debit) ,  
 
+	   'ContaContabil'= t2.Account,
+
+	   'Regra Distr' = '',
+
        'Pago'			= 0,
 
        'Posted'			= '',
@@ -400,6 +419,8 @@ left join OITR T3 on T3.ReconNum = T2.ReconNum
 
   
 
+  
+
 UNION  
 
 
@@ -441,6 +462,10 @@ select 'TipoDoc'    = 'Boleto',
        'PayRef'     = T1.PaymentRef,   
 
        'Total'      = isnull(T2.SumApplied,T0.BoeSum),  
+	 
+	   'ContaContabil'= t4.acctcode,
+
+	   'Regra Distr' = isnull(t2.ocrcode,t4.ocrcode),
 
        'Pago'       = 0,  
 
@@ -471,11 +496,13 @@ left join VPM2 T2 on T2.DocNum   = T0.PmntNum
                 and T2.InvType  = 18         /* Somente contas a pagar originadas de notas fiscais */    
 
 left join OPCH T3 on T3.DocEntry = T2.DocEntry /* Nota Fiscal */    
-
+left join pch1 t4 on t4.DocEntry = t3.DocEntry
 where T0.BoeStatus = 'G'  
 
   and T0.BoeType = 'O'  
 
+
+        
 
 
 GO
