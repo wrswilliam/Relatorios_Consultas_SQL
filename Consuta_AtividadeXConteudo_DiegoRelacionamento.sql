@@ -1,0 +1,30 @@
+SELECT 
+	   T0.ClgCode
+	  ,T5.CardCode
+	  ,T5.CardName
+	  ,CONVERT(DATE,T0.CntctDate)
+	  ,T1.NAME AS DEPARTAMENTO
+	  ,T2.NAME AS ATIVIDADE
+	  ,T3.U_NAME AS 'ATRIBUÍDO A'
+	  ,CASE	
+			T4.U_NAME WHEN 'MANAGER' THEN U_LGO_AtrPor
+		END 'ATRIBUIDO POR'
+	  ,T0.Details AS 'OBSERVAÇÕES'
+	  ,T0.Notes AS CONTEUDO
+	  ,T0.U_LGO_PARC_IMPLE
+	  ,(T6.firstName +' '+T6.lastName) as 'Responsavel Pedg' 
+      ,(T7.firstName +' '+T7.lastName) as 'Responsavel Rel' 
+FROM OCLG T0
+INNER JOIN OCLT T1 ON T1.Code = T0.CntctType
+INNER JOIN OCLS T2 ON T2.CODE = T0.CntctSbjct
+INNER JOIN OUSR T3 ON T3.INTERNAL_K = T0.AttendUser
+INNER JOIN OUSR T4 ON T4.INTERNAL_K = T0.AssignedBy
+INNER JOIN OCRD T5 ON T5.CARDCODE = T0.CARDCODE
+LEFT JOIN OHEM  T6 ON T6.empID = T5.U_LGO_CodRespPed 
+LEFT JOIN OHEM  T7 ON T7.empID = T5.U_LGO_CodRespRel 
+WHERE
+    T0.U_LGO_PARC_IMPLE = [%0]
+AND T1.NAME = [%1]
+AND T2.NAME = [%2]
+
+
