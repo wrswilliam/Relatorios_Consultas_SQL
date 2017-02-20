@@ -43,13 +43,16 @@ IF @object_type ='22' AND @transaction_type = ('U')
 
 		IF((SELECT COUNT(*) FROM OPOR T0 INNER JOIN POR1 T1 ON T0.DocEntry = T1.DocEntry
 				WHERE T0.DocEntry = @list_of_cols_val_tab_del
-					  AND CONVERT(DATE,T0.DocDueDate) < CONVERT(DATE,@DATECREATE))>0)
+					  AND DATEDIFF(DAY,T0.DocDueDate,T0.CreateDate) > 30
+					  )>0)
+					  --CONVERT(DATE,T0.DocDueDate) < CONVERT(DATE,@DATECREATE)
 	   BEGIN
 	    
 			SET @error = 2626
 			SET @error_message = 'A DATA DE ENTREGA TEM QUE SER MAIOR QUE 30 DIAS DA DATA DE LANÇAMENTO'
 		END
 	END
+
 	
 	
 --Transaction Pedido de Compra
