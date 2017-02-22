@@ -43,36 +43,42 @@ DROP TABLE PRODUTOS_GENIOS
 if @object_type = '13' and @transaction_type ='A'
 BEGIN
 DECLARE 
-		 @PG_NOME_CLIENTE NVARCHAR (250)
-		,@PG_NOMEF_CLIENTE NVARCHAR (250)
-		,@PG_CARDCODE NVARCHAR(30)
-		,@PG_CNPJ NVARCHAR(20)
-		,@PG_LOG NVARCHAR(100)
-		,@PG_RUA NVARCHAR (100)
-		,@PG_NUMERO NVARCHAR(100)
-		,@PG_BAIRRO NVARCHAR(100)
-		,@PG_CIDADE NVARCHAR(100)
-		,@PG_ESTADO NVARCHAR(100)
-		,@PG_CEP NVARCHAR(100)
-		,@PG_EMAIL NVARCHAR(100)
+		 @PG_NOME_CLIENTE NVARCHAR (255)
+		,@PG_NOMEF_CLIENTE NVARCHAR (255)
+		,@PG_CARDCODE NVARCHAR(255)
+		,@PG_CNPJ NVARCHAR(255)
+		,@PG_LOG NVARCHAR(255)
+		,@PG_RUA NVARCHAR (255)
+		,@PG_NUMERO NVARCHAR(255)
+		,@PG_BAIRRO NVARCHAR(255)
+		,@PG_CIDADE NVARCHAR(255)
+		,@PG_ESTADO NVARCHAR(255)
+		,@PG_CEP NVARCHAR(255)
+		,@PG_EMAIL NVARCHAR(255)
 		,@PG_DATA_NOTA DATE
 		,@PG_NUMERO_NOTA INT
 		,@PG_NUMERO_DOC INT
 		,@PG_NUMERO_DOC_BASE INT
-		,@PG_SERIE NVARCHAR (25)
-		,@PG_CODIGO_ITEM NVARCHAR (50)
-		,@PG_DESC_ITEM NVARCHAR(60)
-		,@PG_ABV_ITEM NVARCHAR(15)
+		,@PG_SERIE NVARCHAR (255)
+		,@PG_CODIGO_ITEM NVARCHAR (255)
+		,@PG_DESC_ITEM NVARCHAR(255)
+		,@PG_ABV_ITEM NVARCHAR(255)
 		,@PG_QTD_VENDA INT
 		,@PG_QTD_DEV INT
 		,@PG_STATUS INT
-		,@PG_CANCELED NVARCHAR(2)
+		,@PG_CANCELED NVARCHAR(255)
 		,@CONT INT
 		,@LineNum INT
+		,@CONSULTOR NVARCHAR(255)
+		,@PROPRIO NVARCHAR(255)
 
-		SET @CONT = (SELECT COUNT(1) FROM INV1 WHERE DOCENTRY =  @list_of_cols_val_tab_del)
+		SET @CONT = (SELECT COUNT(1) FROM INV1 WHERE DOCENTRY = @list_of_cols_val_tab_del)
 		SET @LineNum = 0
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
+		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
 		
+		IF (@CONSULTOR = 'N' OR @PROPRIO = 'N')
+		BEGIN
 
 		WHILE @LineNum < @CONT
 		BEGIN
@@ -97,12 +103,12 @@ DECLARE
 					 , @PG_ABV_ITEM = (SELECT FRGNNAME FROM OITM WHERE ITEMCODE = T0.ITEMCODE)
 					 , @PG_QTD_VENDA = T0.QUANTITY
 					 , @PG_CANCELED = T1.CANCELED
-			 
+					 			 
 
 					 FROM INV1  T0
 					  INNER JOIN OINV T1 ON T0.DOCENTRY = T1.DOCENTRY 
 					  INNER JOIN OITM T2 ON T0.ITEMCODE = T2.ITEMCODE
-					  WHERE T1.DocEntry =  @list_of_cols_val_tab_del
+					  WHERE T1.DocEntry = @list_of_cols_val_tab_del
 					  and LineNum = @LineNum
 					
 					IF @PG_CODIGO_ITEM = (SELECT ITEMCODE FROM OITM WHERE ITEMCODE = @PG_CODIGO_ITEM AND QryGroup25 ='Y')
@@ -139,10 +145,11 @@ DECLARE
 											
 								END
 										SET @LineNum = @LineNum +1;
-							END	
+							 END	
+			END
 		END
 
-------------------------------------procedure nota dev-----------------------------------------------
+----------------------------------procedure nota dev-----------------------------------------------
 
 
 if @object_type = '14' and @transaction_type ='A'
@@ -150,7 +157,12 @@ BEGIN
 
 		SET @CONT = (SELECT COUNT(1) FROM RIN1 WHERE DOCENTRY =  @list_of_cols_val_tab_del)
 		SET @LineNum = 0
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
+		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
 		
+		IF (@CONSULTOR = 'N' OR @PROPRIO = 'N')
+		BEGIN
+
 
 		WHILE @LineNum < @CONT
 		BEGIN
@@ -214,4 +226,5 @@ BEGIN
 								END
 										SET @LineNum = @LineNum +1;
 							END	
+					END
 		END
