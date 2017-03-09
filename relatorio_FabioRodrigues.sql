@@ -77,42 +77,39 @@ AND T1.U_LGO_CMKT = 'NÃO'
 AND T2.QryGroup2 ='N'
 AND T2.QryGroup5 ='Y'
 AND T2.QryGroup14 ='N'
-AND T0.ITEMCODE IN ('RE00001','RE00013','RE00025','RE00031','RE00043','RE00060','RE00065','RE00083','RE00070','RE00087','RE00232')--,'RE00227'
+AND T0.ITEMCODE IN ('RE00001','RE00013','RE00025','RE00031','RE00037','RE00043','RE00050','RE00060','RE00065','RE00083','RE00070','RE00087','RE00232','RE00228','RE00154')--,'RE00227'
 ) 
 SELECT  DISTINCT
 		 R0.ITEMNAME
-		,CASE WHEN R0.ITEMNAME = 'Cidade da Memoria Aluno parte 1'       THEN 'kit 4°ANO'
-			  WHEN R0.ITEMNAME = 'Ciranda da Inteligencia Aluno liçao 1' THEN 'kit 5°ANO'
-			  WHEN R0.ITEMNAME = 'Codigos da Inteligencia Aluno parte 1' THEN 'kit 6°ANO'
-			  WHEN R0.ITEMNAME = 'EU no Comando da Mente Aluno parte 1'  THEN 'kit 7°ANO'
-			  WHEN R0.ITEMNAME = 'Identidade A Liderança do EU Aluno liçao 1' THEN 'kit 8°ANO'
-			  WHEN R0.ITEMNAME = 'Inteligencia Saudavel Aluno parte 1'    THEN 'kit 9°ANO'
-			  WHEN R0.ITEMNAME = 'Jogos da Inteligencia Aluno liçao 1'    THEN 'kit 10°ANO'
-			  WHEN R0.ITEMNAME = 'Mentes Brilhantes Aluno parte 1'		  THEN 'kit 11°ANO'
-			  WHEN R0.ITEMNAME = 'O Brilho da Inteligencia - Aluno - Parte 1' THEN 'kit 12°ANO'
-			  WHEN R0.ITEMNAME = 'Olimpiadas da Inteligencia Aluno parte 1'   THEN 'kit 13°ANO'
-			  WHEN R0.ITEMNAME = 'Ser Humano Sem Fronteiras Aluno liçao 1'    THEN 'kit 14°ANO'
-		 END kit
-		,CASE WHEN R0.ITEMNAME = 'Cidade da Memoria Aluno parte 1'       THEN '4°ANO'
-			  WHEN R0.ITEMNAME = 'Ciranda da Inteligencia Aluno liçao 1' THEN '5°ANO'
-			  WHEN R0.ITEMNAME = 'Codigos da Inteligencia Aluno parte 1' THEN '6°ANO'
-			  WHEN R0.ITEMNAME = 'EU no Comando da Mente Aluno parte 1'  THEN '7°ANO'
-			  WHEN R0.ITEMNAME = 'Identidade A Liderança do EU Aluno liçao 1' THEN '8°ANO'
-			  WHEN R0.ITEMNAME = 'Inteligencia Saudavel Aluno parte 1'    THEN '9°ANO'
-			  WHEN R0.ITEMNAME = 'Jogos da Inteligencia Aluno liçao 1'    THEN '10°ANO'
-			  WHEN R0.ITEMNAME = 'Mentes Brilhantes Aluno parte 1'		  THEN '11°ANO'
-			  WHEN R0.ITEMNAME = 'O Brilho da Inteligencia - Aluno - Parte 1' THEN '12°ANO'
-			  WHEN R0.ITEMNAME = 'Olimpiadas da Inteligencia Aluno parte 1'   THEN '13°ANO'
-			  WHEN R0.ITEMNAME = 'Ser Humano Sem Fronteiras Aluno liçao 1'    THEN '14°ANO'
+		,CASE WHEN R0.ITEMNAME = 	'O Brilho da Inteligencia Kit - Aluno - Parte 1' OR R0.ITEMNAME = 'O Brilho da Inteligencia - Aluno - Parte 1'	THEN	'3 anos EI'
+			  WHEN R0.ITEMNAME = 	'Ciranda da Inteligencia Aluno liçao 1'						THEN	'4 anos EI'
+			  WHEN R0.ITEMNAME = 	'Jogos da Inteligencia Aluno liçao 1'						THEN	'5 anos EI'
+			  WHEN R0.ITEMNAME = 	'Olimpiadas da Inteligencia Aluno parte 1'					THEN	'1° ano EFI'
+			  WHEN R0.ITEMNAME = 	'Inteligencia Saudavel Aluno parte 1'						THEN	'2° ano EFI'
+		  	  WHEN R0.ITEMNAME = 	'Relaçoes Saudaveis Aluno parte 1'							THEN	'3° ano EFI'
+			  WHEN R0.ITEMNAME = 	'Cidade da Memoria Aluno parte 1'							THEN	'4° ano EFI'
+			  WHEN R0.ITEMNAME = 	'Armadilhas da Mente Aluno liçao 1'							THEN	'5 °ano EFI'
+			  WHEN R0.ITEMNAME = 	'Mentes Brilhantes Aluno parte 1'							THEN	'6° ano EFII'
+			  WHEN R0.ITEMNAME = 	'Codigos da Inteligencia Aluno parte 1'						THEN	'7° ano EFII'
+			  WHEN R0.ITEMNAME = 	'EU no Comando da Mente Aluno parte 1'						THEN	'8° ano EFII'
+			  WHEN R0.ITEMNAME = 	'Ser Humano Sem Fronteiras Aluno liçao 1'					THEN	'9° ano EFII'
+			  WHEN R0.ITEMNAME = 	'Identidade A Liderança do EU Aluno liçao 1'				THEN	'1° ano EM'
+			  WHEN R0.ITEMNAME = 	'Eu em Cena - Aluno - Parte 1'								THEN	'2° ano EM'
+			  WHEN R0.ITEMNAME = 	'Gestão da Emoçao Vestibular e Profissao Aluno Parte 1'	OR R0.ITEMNAME = 	'Gestao da Emocao Vestibular e Profissao Aluno Parte 1'	THEN	'3° ano EM'
+			  WHEN R0.ITEMNAME = 	'Em Familia - Desenvolvendo a Inteligencia Socioemocional'	THEN	'Familia'
+
 		 END SEGMENTO
-        ,SUM(CAST(R0.QTD_PLANEJADA AS DECIMAL)) QTD_PLANEJADA
-		,SUM(CAST(R0.QTD_ACOMULADA AS DECIMAL)) QTD_ALUNO_EI
-		,'COTACAO' = (SELECT SUM(CAST(T1.Quantity AS decimal)) FROM OQUT T0 INNER JOIN QUT1 T1 ON T0.DocEntry = T1.DocEntry
-															   WHERE T1.Dscription = R0.ITEMNAME AND T0.DOCSTATUS = 'O')
+		,'QTD_KIT' = (SELECT COUNT (A.ITEMNAME) FROM @RELATORIO_FABIO A WHERE A.ITEMNAME =  R0.ITEMNAME)
+		,'QTD_ALUNO' = (SELECT SUM
+        ,SUM(CAST(R0.QTD_PLANEJADA AS INT)) QTD_PLANEJADA
+		,SUM(CAST(R0.QTD_ACOMULADA AS INT)) QTD_ALUNO_EI
+		,'COTACAO' = ISNULL((SELECT SUM(CAST(T1.Quantity AS INT)) FROM OQUT T0 INNER JOIN QUT1 T1 ON T0.DocEntry = T1.DocEntry
+															   WHERE T1.Dscription = R0.ITEMNAME AND T0.DOCSTATUS = 'O'),0)
+			
 		FROM @RELATORIO_FABIO R0
 	PIVOT(
 		  SUM(R0.QTD_PENDENTE) FOR
-			R0.ITEMCODE IN (RE00001,RE00013,RE00025,RE00031,RE00043,RE00060,RE00065,RE00083,RE00070,RE00087,RE00227,RE00232)
+			R0.ITEMCODE IN (RE00001,RE00013,RE00025,RE00031,RE00037,RE00043,RE00050,RE00060,RE00065,RE00083,RE00070,RE00087,RE00232,RE00228,RE00154)
 		) AS R0
 		GROUP BY R0.ITEMNAME
 
