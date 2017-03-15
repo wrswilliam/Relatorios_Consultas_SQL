@@ -68,7 +68,7 @@ FROM OAT1 T0
 	INNER JOIN OOAT T1 ON T0.AgrNo = T1.AbsID
 	INNER JOIN OCRD T2 ON T2.CARDCODE = T1.BpCode
 
-WHERE t1.StartDate >= '2016-08-01'
+WHERE t1.StartDate >= '2016-05-05'
 AND t1.EndDate <= '2017-12-31'
 AND T1.Cancelled = 'N'
 AND T1.Status IN ('A','T')
