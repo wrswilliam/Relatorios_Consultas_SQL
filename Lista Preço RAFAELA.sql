@@ -16,7 +16,7 @@ SELECT
 FROM OCRD T0
 	INNER JOIN CRD1 T1 ON T0.CardCode = T1.CardCode
 	INNER JOIN OPLN T3 ON T0.ListNum = T3.ListNum
-	WHERE T0.QryGroup1 = 'Y'
+	WHERE T0.QryGroup1 = 'Y' OR T0.QryGroup4 = 'Y'
 	AND T0.CardType = 'C'
 	
 GROUP BY T0.CardCode,T0.CardName,T0.CardFName,
