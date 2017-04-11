@@ -74,13 +74,13 @@ DECLARE
 
 		SET @CONT = (SELECT COUNT(1) FROM INV1 WHERE DOCENTRY = @list_of_cols_val_tab_del)
 		SET @LineNum = 0
-		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
-		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del ) 
+		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del )
 		
 		IF (@CONSULTOR = 'N' OR @PROPRIO = 'N')
 		BEGIN
 
-		WHILE @LineNum < @CONT
+		WHILE @LineNum <= @CONT
 		BEGIN
 				SELECT @PG_NOME_CLIENTE = T1.CARDNAME
 					 , @PG_NOMEF_CLIENTE =(SELECT CARDFNAME FROM OCRD OC WHERE OC.CARDCODE = T1.CARDCODE)
@@ -157,14 +157,14 @@ BEGIN
 
 		SET @CONT = (SELECT COUNT(1) FROM RIN1 WHERE DOCENTRY =  @list_of_cols_val_tab_del)
 		SET @LineNum = 0
-		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
-		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL WHERE CL.CARDCODE =  @list_of_cols_val_tab_del)
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del ) 
+		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del )
 		
 		IF (@CONSULTOR = 'N' OR @PROPRIO = 'N')
 		BEGIN
 
 
-		WHILE @LineNum < @CONT
+		WHILE @LineNum <= @CONT
 		BEGIN
 				SELECT @PG_NOME_CLIENTE = T1.CARDNAME
 					 , @PG_NOMEF_CLIENTE =(SELECT CARDFNAME FROM OCRD OC WHERE OC.CARDCODE = T1.CARDCODE)
