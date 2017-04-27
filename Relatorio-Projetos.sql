@@ -13,10 +13,10 @@ SELECT
 	cast(t3.Price as decimal(10,2)) as 'Preço'
 
 	FROM OJDT T0
-	INNER JOIN JDT1 T1 ON T0.Ref1 = T1.Ref1
+	LEFT JOIN JDT1 T1 ON T0.Ref1 = T1.Ref1
 						and t0.LocTotal = t1.Credit
 	INNER JOIN OCRD T2 ON T1.ShortName = T2.CARDCODE
-	INNER JOIN PCH1 T3 ON T1.Ref1 = cast(T3.DocEntry as nvarchar)
+	LEFT JOIN PCH1 T3 ON T1.Ref1 = cast(T3.DocEntry as nvarchar)
 	
 	
 	
