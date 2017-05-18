@@ -1,22 +1,38 @@
---SELECT * FROM OADP
+/*configurações gerais*/
+/*
+SELECT * FROM OADP
 
---UPDATE OADP
---SET WordPath = CAST(REPLACE(CAST(WordPath AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
---   ,BitmapPath = CAST(REPLACE(CAST(BitmapPath AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
---   ,AttachPath = CAST(REPLACE(CAST(AttachPath AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
---   ,ExtPath = CAST(REPLACE(CAST(ExtPath AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   
+UPDATE OADP
+SET WordPath = '\\Eisrvtestsap\b1_shr\ExclDocs\'
+   ,BitmapPath = '\\Eisrvtestsap\b1_shr\APP\Imagens\'
+   ,AttachPath = '\\Eisrvtestsap\b1_shr\APP\Anexo\'
+   ,ExtPath = '\\Eisrvtestsap\b1_shr\APP\'
+ --------------------------------------------------
+SELECT * FROM OADM
 
-SELECT * FROM [dbo].[@LGNFECONF]
+UPDATE OADM
+SET ExcelPath = '\\Eisrvtestsap\b1_shr\ExclDocs\'
+    
+ */
 
-UPDATE [dbo].[@LGNFECONF]
-SET U_PathDANFE = CAST(REPLACE(CAST(U_PathDANFE AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_PathLogo = CAST(REPLACE(CAST(U_PathDANFE AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_PathPDF = CAST(REPLACE(CAST(U_PathPDF AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_DirRepDistr = CAST(REPLACE(CAST(U_DirRepDistr AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_DirRepCnc = CAST(REPLACE(CAST(U_DirRepCnc AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_DirRepDPEC = CAST(REPLACE(CAST(U_DirRepDPEC AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_DirRepCCe = CAST(REPLACE(CAST(U_DirRepCCe AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_DirRepInut = CAST(REPLACE(CAST(U_DirRepInut AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_PathPrintCCe = CAST(REPLACE(CAST(U_PathPrintCCe AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
-   ,U_PathPDFCCe = CAST(REPLACE(CAST(U_PathPDFCCe AS NVARCHAR),'Eisrvsapap','Eisrvtestsap') AS NTEXT)
+ /* configurações b1 plus nfe*/
+ /*
+ SELECT * FROM [DBO].[@LGNFECONF]
+
+ UPDATE [DBO].[@LGNFECONF]
+ SET U_PathDANFE = '\\Eisrvtestsap\b1_shr\APP\DANFE\LGDanfe_retrato.rpt'
+    ,U_PathLogo = '\\Eisrvtestsap\b1_shr\APP\DANFE\EI.jpg'
+    ,U_PathPDF = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\PDF - NFe'
+	,U_DirRepDistr = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\XML de Distribuicao'
+	,U_DirRepCnc = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\XML de Cancelamento'
+	,U_DirRepDPEC = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\XML DPEC'
+	,U_DirRepCCe = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\XML CCe'
+	,U_DirRepInut = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\XML Inutilização'
+	,U_PathPrintCCe = '\\Eisrvtestsap\b1_shr\APP\DANFE\LGCCe.rpt'
+	,U_PathPDFCCe = '\\Eisrvtestsap\b1_shr\APP\XML e PDF\Escola da Inteligência - Matriz\PDF - CCe'
+	,U_CodTpAmb = 2
+
+*/
+
+
+
