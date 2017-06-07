@@ -59,10 +59,9 @@
 SELECT * FROM PRODUTOS_GENIOS
 
 
+----------------------------------procedure nota saida GENIOS-----------------------------------------------
 
-		
-
-if @object_type = '13' and @transaction_type ='A'
+if @object_type = '13' and @transaction_type = 'A'
 BEGIN
 DECLARE 
 		 @PG_NOME_CLIENTE NVARCHAR (255)
@@ -93,11 +92,13 @@ DECLARE
 		,@LineNum INT
 		,@CONSULTOR NVARCHAR(255)
 		,@PROPRIO NVARCHAR(255)
+		--,@GRPMAT NVARCHAR (255)
 
 		SET @CONT = (SELECT COUNT(1) FROM INV1 WHERE DOCENTRY = @list_of_cols_val_tab_del)
 		SET @LineNum = 0
-		--SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del ) 
-		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del )
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del ) 
+		--SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del )
+		--SET @GRPMAT = (SELECT OM.ITMSGRPCOD FROM OITM OM INNER JOIN INV1 I1 ON OM.ItemCode = I1.ItemCode WHERE I1.DocEntry = @list_of_cols_val_tab_del)
 		
 		IF (@CONSULTOR = 'N')
 		BEGIN
@@ -132,8 +133,14 @@ DECLARE
 					  INNER JOIN OITM T2 ON T0.ITEMCODE = T2.ITEMCODE
 					  WHERE T1.DocEntry = @list_of_cols_val_tab_del
 					  and LineNum = @LineNum
+
+					  	IF @LineNum = 1
+									BEGIN
+										   INSERT INTO PRODUTOS_GENIOS_ESCOLA (PG_NOME_CLIENTE,PG_NOMEF_CLIENTE,PG_CARDCODE,PG_CNPJ,PG_LOG,PG_RUA,PG_NUMERO,PG_BAIRRO,PG_CIDADE,PG_ESTADO,PG_CEP,PG_EMAIL,PG_DATA_NOTA,PG_NUMERO_NOTA,PG_NUMERO_DOC,PG_NUMERO_DOC_BASE,PG_STATUS,PG_CANCELED) 
+									       VALUES (@PG_NOME_CLIENTE,@PG_NOMEF_CLIENTE,@PG_CARDCODE,@PG_CNPJ,@PG_LOG ,@PG_RUA,@PG_NUMERO,@PG_BAIRRO,@PG_CIDADE,@PG_ESTADO,@PG_CEP,@PG_EMAIL,@PG_DATA_NOTA,@PG_NUMERO_NOTA,@PG_NUMERO_DOC,@PG_NUMERO_DOC_BASE,@PG_STATUS,@PG_CANCELED);
+								    END
 					
-					IF @PG_CODIGO_ITEM = (SELECT ITEMCODE FROM OITM WHERE ITEMCODE = @PG_CODIGO_ITEM AND QryGroup25 ='Y')
+					else IF @PG_CODIGO_ITEM = (SELECT ITEMCODE FROM OITM WHERE ITEMCODE = @PG_CODIGO_ITEM AND QryGroup25 ='Y' AND ITMSGRPCOD = 101)
 						BEGIN
 							SET @PG_STATUS = 1;
 
@@ -165,12 +172,8 @@ DECLARE
 							     		    INSERT INTO PRODUTOS_GENIOS (PG_NOME_CLIENTE,PG_NOMEF_CLIENTE,PG_CARDCODE,PG_CNPJ,PG_LOG,PG_RUA,PG_NUMERO,PG_BAIRRO,PG_CIDADE,PG_ESTADO,PG_CEP,PG_EMAIL,PG_DATA_NOTA,PG_NUMERO_NOTA,PG_NUMERO_DOC,PG_NUMERO_DOC_BASE,PG_SERIE,PG_CODIGO_ITEM, PG_DESC_ITEM,PG_ABV_ITEM,PG_QTD_VENDA,PG_QTD_DEV,PG_QTD_CONF,PG_STATUS,PG_CANCELED) 
 									        VALUES (@PG_NOME_CLIENTE,@PG_NOMEF_CLIENTE,@PG_CARDCODE,@PG_CNPJ,@PG_LOG ,@PG_RUA,@PG_NUMERO,@PG_BAIRRO,@PG_CIDADE,@PG_ESTADO,@PG_CEP,@PG_EMAIL,@PG_DATA_NOTA,@PG_NUMERO_NOTA,@PG_NUMERO_DOC,@PG_NUMERO_DOC_BASE,@PG_SERIE,@PG_CODIGO_ITEM,@PG_DESC_ITEM,@PG_ABV_ITEM,@PG_QTD_VENDA,0,@PG_QTD_VENDA,@PG_STATUS,@PG_CANCELED);
 											
-											IF @LineNum = @Cont
-											BEGIN
-										    	INSERT INTO PRODUTOS_GENIOS_ESCOLA (PG_NOME_CLIENTE,PG_NOMEF_CLIENTE,PG_CARDCODE,PG_CNPJ,PG_LOG,PG_RUA,PG_NUMERO,PG_BAIRRO,PG_CIDADE,PG_ESTADO,PG_CEP,PG_EMAIL,PG_DATA_NOTA,PG_NUMERO_NOTA,PG_NUMERO_DOC,PG_NUMERO_DOC_BASE,PG_STATUS,PG_CANCELED) 
-									            VALUES (@PG_NOME_CLIENTE,@PG_NOMEF_CLIENTE,@PG_CARDCODE,@PG_CNPJ,@PG_LOG ,@PG_RUA,@PG_NUMERO,@PG_BAIRRO,@PG_CIDADE,@PG_ESTADO,@PG_CEP,@PG_EMAIL,@PG_DATA_NOTA,@PG_NUMERO_NOTA,@PG_NUMERO_DOC,@PG_NUMERO_DOC_BASE,@PG_STATUS,@PG_CANCELED);
-										    END
-
+										
+											
 								END
 										SET @LineNum = @LineNum +1;
 										 
@@ -180,16 +183,16 @@ DECLARE
 			END
 		END
 
-----------------------------------procedure nota dev-----------------------------------------------
+----------------------------------procedure nota dev GENIOS-----------------------------------------------
 
 
-if @object_type = '14' and @transaction_type ='A'
+if @object_type = '14' and @transaction_type  = 'A'
 BEGIN
 
 		SET @CONT = (SELECT COUNT(1) FROM RIN1 WHERE DOCENTRY =  @list_of_cols_val_tab_del)
 		SET @LineNum = 0
-	--	SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del ) 
-		SET @PROPRIO =   (SELECT CL.QryGroup64 FROM OCRD CL INNER JOIN OINV T1 ON T1.CardCode = CL.CardCode WHERE T1.DOCENTRY =  @list_of_cols_val_tab_del )
+		SET @CONSULTOR = (SELECT CL.QryGroup48 FROM OCRD CL INNER JOIN ORIN RN ON RN.CardCode = CL.CardCode WHERE RN.DOCENTRY =  @list_of_cols_val_tab_del ) 
+	
 		
 		IF (@CONSULTOR = 'N')
 		BEGIN
@@ -226,7 +229,7 @@ BEGIN
 					  WHERE T1.DocEntry =  @list_of_cols_val_tab_del
 					  and LineNum = @LineNum
 					
-					IF @PG_CODIGO_ITEM = (SELECT ITEMCODE FROM OITM WHERE ITEMCODE = @PG_CODIGO_ITEM AND QryGroup25 ='Y')
+					IF @PG_CODIGO_ITEM = (SELECT ITEMCODE FROM OITM WHERE ITEMCODE = @PG_CODIGO_ITEM AND QryGroup25 ='Y' AND ITMSGRPCOD = 101)
 						BEGIN
 							SET @PG_STATUS = 2;
 
@@ -258,4 +261,6 @@ BEGIN
 										SET @LineNum = @LineNum +1;
 							END	
 					END
+		END
+		
 		END
