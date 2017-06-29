@@ -75,6 +75,7 @@ BEGIN
 												   ,DT_INIC_ATIVI = @DT_INC
 												   ,DT_TERM_ATIVI = @DT_TER
 												   ,ATENDENTE = @ATEND
+												   WHERE ATIVIDADE = @COD_ATT
 					END
 		END
 
